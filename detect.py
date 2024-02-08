@@ -2,6 +2,8 @@ import argparse
 import time
 from pathlib import Path
 
+from barcode import get_barcode
+
 import cv2
 import torch
 import torch.backends.cudnn as cudnn
@@ -103,6 +105,16 @@ def detect(save_img=False):
             else:
                 p, s, im0, frame = path, '', im0s, getattr(dataset, 'frame', 0)
 
+            print(det)
+            center_x = int(det[0][0])
+            center_y = int(det[0][1])
+            w = int(det[0][2])
+            h = int(det[0][3])
+            x = int(center_x - w / 2)
+            y = int(center_y - h / 2)
+            barcode, _ = get_barcode(im0[center_y: h, center_x:w])
+            print(barcode)
+            
             p = Path(p)  # to Path
             save_path = str(save_dir / p.name)  # img.jpg
             txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
