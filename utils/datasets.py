@@ -290,7 +290,7 @@ class LoadStreams:  # multiple IP or RTSP cameras
                 print("Running Gstreamer:")
                 cap = cv2.VideoCapture(url, cv2.CAP_GSTREAMER)
             else:
-                cap = cv2.VideoCapture(url)
+                cap = cv2.VideoCapture(url, cv2.CAP_GSTREAMER)
             assert cap.isOpened(), f'Failed to open {s}'
             w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
